@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+<div>
+    <h1>Get in touch:</h1>
+    <form method="post" class="post-form">
+        {% csrf_token %}
+        {{ feedback_form }}
+        <p>
+            *Your information will never be shared with any third party
+        </p>
+        <div>
+            <button type="submit" class="save btn btn-default">
+                Send Message
+            </button>
+        </div>
+    </form>
+</div>
+<div style=margin-top:100px>
+    <p><strong>Address: {{ address }}</strong></p>
+    <p><strong>Phone: {{ phone }}</strong></p>
+    <p><strong>Email: {{ email }}</strong></p>
+</div>
+{% endblock %}

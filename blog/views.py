@@ -1,5 +1,11 @@
+import imp
+import re
+from django.db import IntegrityError
 from django.shortcuts import redirect, render
+from django.urls import reverse
 from django.utils import timezone
+from blog.forms import FeedBackForm
+from django.contrib import messages
 
 from blog.forms import PostForm
 from .models import Post
@@ -44,3 +50,31 @@ def post_edit(request, pk):
     else:
         form = PostForm(instance=post)
     return render(request, 'blog/post_edit.html', {'form': form})
+
+
+def about(request):
+    return render(request, 'blog/about.html', {})
+
+
+def contacts(request):
+    form = FeedBackForm()
+    if request.method == "POST":
+        form = FeedBackForm(request.POST)
+        if form.is_valid():
+            try:
+                form.save()
+            except IntegrityError:
+                messages.add_message(
+                    request, messages.ERROR, "Ваш прошлый запрос еще не обработан")
+                messages.add_message(
+                    request, messages.ERROR, "Попробуйте позже")
+
+            return redirect(reverse("contacts"))
+
+    context = {
+        "feedback_form": form,
+        "address": "200 N. Spring Street Los Angeles CA 90012 United States",
+        "phone": "+1(800) 000-00-00",
+        "email": "support@blog.com"
+    }
+    return render(request, 'blog/contacts.html', context)

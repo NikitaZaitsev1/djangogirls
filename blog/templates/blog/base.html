@@ -15,8 +15,15 @@
 
 <body>
     <div class="page-header">
-        <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a>
-        <h1><a href="/">Technology companies</a></h1>
+        <!-- <a href="{% url 'post_new' %}" class="top-menu"><span class="glyphicon glyphicon-plus"></span></a> -->
+        {% block navigation %}
+        <h1><a href="/">Technology companies|</a>
+            <a href="{% url 'about' %}">About|</a>
+            <a href="{% url 'contacts' %}">Contacts|</a>
+            <a href="/">Sing In|</a>
+            <a href="/">Log In|</a>
+        </h1>
+        {% endblock %}
     </div>
     <div class="content container">
         <div class="row">
